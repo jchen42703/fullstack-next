@@ -1,34 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ory Kratos ReactJS / NextJS User Interface Reference Implementation
 
-## Getting Started
+This repository contains a reference implementation for Ory Kratos' in ReactJS /
+NextJS. It implements all Ory Kratos flows (login, registration, account
+settings, account recovery, account verification).
 
-First, run the development server:
+If you only want to add authentication to your app, and not customize the login,
+registration, account recovery, ... screens, please check out the
+[Ory Kratos Quickstart](https://www.ory.sh/kratos/docs/quickstart).
 
-```bash
-npm run dev
-# or
-yarn dev
+To learn more about using this app, how it is built, and how to customize it
+head over to the
+[accompanying blog post](https://www.ory.sh/nextjs-authentication-spa-custom-flows-open-source)
+which will be released soon!
+
+The app itself you can see live at
+**[kratos-reference-ui-react-nextjs.vercel.app](https://kratos-reference-ui-react-nextjs.vercel.app)**.
+
+<br />
+
+## Usage
+
+<br />
+
+**Environment**
+
+This application can be configured with the following environment variables
+_(refer to the
+[NextJS documentation](https://nextjs.org/docs/basic-features/environment-variables)
+to learn how to configure the application)_:
+
+- `ORY_SDK_URL` _(required)_<br />The URL where ORY Kratos's Public API is
+  located. If this app and ORY Kratos are running in the same private network,
+  this should be the private network address _(e.g.
+  `kratos-public.svc.cluster.local`)_.
+
+Example `.env.local`:
+
+```
+ORY_SDK_URL=http://localhost:4433/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br />
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**Running Locally**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The [quickstart documentation](https://www.ory.sh/kratos/docs/quickstart) guides
+developers to use port `4455` for the self-service UI. By default, NextJS uses
+port `3000`. Use the `-p` or `--port` option of the `next dev` / `next start`
+commands to set the port number:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+npm run dev -- -p 4455
+```
