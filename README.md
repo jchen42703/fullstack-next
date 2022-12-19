@@ -12,8 +12,13 @@
 
 All of the SDKs interact with the Kratos server (whether it be the self-hosted Docker image or through the hosted Ory network).
 
-# Next.js + Ory Flow
+## To-Dos
 
-1. Clone next.js + ory example
-2. Try it with the ory playground API
-3. Then self-host Ory Kratos with Docker
+- [ ] Practical Go Endpoint setup with Postgres (Sequelize)
+  - Don't redirect, just return 401
+  - Echo, JSON Middleware
+- [ ] Move next-js auth api handlers to Go
+  - https://github.com/atreya2011/go-kratos-test
+  - https://github.com/ory/hydra/discussions/2873
+- [ ] Email SMTP Server Setup
+- [ ] Practical UI Endpoint protection with protected dashboard.
