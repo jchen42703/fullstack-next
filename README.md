@@ -12,6 +12,45 @@
 
 All of the SDKs interact with the Kratos server (whether it be the self-hosted Docker image or through the hosted Ory network).
 
+## Setup
+
+UI:
+
+```bash
+cd ui
+yarn dev -- -p 4455
+```
+
+Kratos:
+
+```bash
+# From Blog Post
+# https://www.ory.sh/nextjs-authentication-spa-custom-flows-open-source/
+# Just opens kratos @ 4433 and mail server @ 4436
+# Current setup has the wrong kratos.yml
+docker-compose -f quickstart.yml -f contrib/quickstart/kratos/cloud/quickstart.yml up --build --force-recreate -d
+
+# Use:
+docker-compose -f quickstart.yml -f contrib/quickstart/kratos/custom-ui/quickstart.yml up --build --force-recreate -d
+
+# From Quick Start
+# https://www.ory.sh/docs/kratos/quickstart#clone-ory-kratos-and-run-it-in-docker
+# Opens Node.js UI on port 4455
+# docker-compose -f quickstart.yml -f quickstart-standalone.yml up --build --force-recreate
+
+# With Postgres
+# https://community.ory.sh/t/running-kratos-with-postgres/1908/2
+docker-compose -f quickstart.yml -f quickstart-standalone.yml -f quickstart-postgres.yml up --build --force-recreate
+
+# Cleanup
+docker-compose -f quickstart.yml -f contrib/quickstart/kratos/cloud/quickstart.yml down
+docker-compose -f quickstart.yml rm -fsv
+```
+
+## Potential To-Dos
+
+Need to update `contrib/quickstart/kratos/email-password/kratos.yml`?
+
 ## To-Dos
 
 - [ ] Practical Go Endpoint setup with Postgres (Sequelize)
