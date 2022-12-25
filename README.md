@@ -24,6 +24,7 @@ yarn dev -- -p 4455
 Kratos:
 
 ```bash
+cd deployment
 # From Blog Post
 # https://www.ory.sh/nextjs-authentication-spa-custom-flows-open-source/
 # Just opens kratos @ 4433 and mail server @ 4436
