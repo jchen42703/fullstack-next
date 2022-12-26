@@ -32,7 +32,9 @@ func CreateAuthMiddleware(oryClient *ory.APIClient) func(next echo.HandlerFunc) 
 			// check if we have a session
 			session, _, err := auth.ValidateSession(oryClient, c)
 			if err != nil {
-				return c.JSON(401, templates.NewError(err))
+				// fmt.Println("validate sess err: ", templates.NewError(err))
+				// return c.JSON(http.StatusUnauthorized, templates.NewError(err))
+				return echo.NewHTTPError(http.StatusUnauthorized, "invalid session")
 			}
 
 			isLogin := c.Path() == "/api/auth/login"

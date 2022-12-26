@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	ory "github.com/ory/client-go"
 )
@@ -32,7 +31,7 @@ func getSession(ctx context.Context) *ory.Session {
 }
 
 func (app *App) sessionMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	loginUrl := fmt.Sprintf("%s/login", os.Getenv("UI_BASE_URL"))
+	// loginUrl := fmt.Sprintf("%s/login", os.Getenv("UI_BASE_URL"))
 
 	return func(writer http.ResponseWriter, request *http.Request) {
 		log.Printf("handling middleware request\n")
@@ -46,11 +45,15 @@ func (app *App) sessionMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		cookies := request.Header.Get("Cookie")
 
 		// check if we have a session
+		fmt.Println("cookies: ", cookies)
 		session, _, err := app.ory.FrontendApi.ToSession(request.Context()).Cookie(cookies).Execute()
 		if (err != nil && session == nil) || (err == nil && !*session.Active) {
 			// this will redirect the user to the managed Ory Login UI
-			log.Printf("redirecting to login page: %s", loginUrl)
-			http.Redirect(writer, request, loginUrl, http.StatusSeeOther)
+			// log.Printf("redirecting to login page: %s", loginUrl)
+			// http.Redirect(writer, request, loginUrl, http.StatusSeeOther)
+			fmt.Println("session: ", session)
+			fmt.Println("err: ", err)
+			http.Redirect(writer, request, "/.ory/self-service/login/browser", http.StatusSeeOther)
 			return
 		}
 

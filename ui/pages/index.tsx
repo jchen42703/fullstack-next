@@ -42,10 +42,17 @@ const Home: NextPage = () => {
         return Promise.reject(err)
       })
 
-    fetch("http://localhost:3000/api/session", { credentials: "include" })
+    fetch("http://localhost:3000/api/session", {
+      method: "GET",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        accept: "application/json",
+      },
+    })
       .then((resp) => resp.json())
       .then((respBody) => console.log(respBody))
-      .catch((err) => console.error(err))
+      .catch((err) => console.log(err))
   }, [router])
 
   return (
