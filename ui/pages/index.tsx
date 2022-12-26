@@ -42,6 +42,7 @@ const Home: NextPage = () => {
         return Promise.reject(err)
       })
 
+    // Fetch Example protected endpoint
     fetch("http://localhost:3000/api/session", {
       method: "GET",
       cache: "no-cache",
