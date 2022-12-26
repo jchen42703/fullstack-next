@@ -41,6 +41,11 @@ const Home: NextPage = () => {
         // Something else happened!
         return Promise.reject(err)
       })
+
+    fetch("http://localhost:3000/api/session", { credentials: "include" })
+      .then((resp) => resp.json())
+      .then((respBody) => console.log(respBody))
+      .catch((err) => console.error(err))
   }, [router])
 
   return (
