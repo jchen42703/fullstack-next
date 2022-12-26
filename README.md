@@ -34,6 +34,14 @@ docker-compose -f quickstart.yml -f contrib/quickstart/kratos/cloud/quickstart.y
 # Use:
 docker-compose -f quickstart.yml -f contrib/quickstart/kratos/custom-ui/quickstart.yml up --build --force-recreate -d
 
+# With Postgres
+# Make sure that postgres is not already running
+# Linux:
+# sudo systemctl stop postgresql
+# Make sure to URL encode your password:
+# https://github.com/ory/kratos/issues/2294
+docker-compose -f quickstart.yml -f contrib/quickstart/kratos/with-postgres/quickstart.yml -f quickstart-postgres.yml up --build --force-recreate -d
+
 # From Quick Start
 # https://www.ory.sh/docs/kratos/quickstart#clone-ory-kratos-and-run-it-in-docker
 # Opens Node.js UI on port 4455
