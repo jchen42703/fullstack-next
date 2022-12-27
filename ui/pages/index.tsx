@@ -43,7 +43,11 @@ const Home: NextPage = () => {
       })
 
     // Fetch Example protected endpoint
-    fetch("http://localhost:3000/api/session", {
+    const fetchUrl =
+      process.env.NODE_ENV == "production"
+        ? "/api/session"
+        : "http://localhost:3000/api/session"
+    fetch(fetchUrl, {
       method: "GET",
       cache: "no-cache",
       credentials: "include",
