@@ -7,6 +7,12 @@ This document describes the deployment in [`deployment/compose/postgres-nginx`](
 - [Getting Started](#getting-started)
 - [Architecture](#architecture)
 - [Deploy to Production](#deploy-to-production)
+  - [Cookie Secret](#cookie-secret)
+- [Kratos Logging](#kratos-logging)
+  - [Postgres Secret](#postgres-secret)
+  - [Kratos Redirect URLs](#kratos-redirect-urls)
+  - [Email Server Setup](#email-server-setup)
+  - [NGINX HTTPS + Domain Deployment](#nginx-https--domain-deployment)
 - [Customization](#customization)
 
 ## Getting Started
@@ -61,5 +67,72 @@ docker-compose -f postgres-nginx/docker-compose.yml rm -fsv
 ## Architecture
 
 ## Deploy to Production
+
+This section covers various aspects that you must cover while deploying this example to production. **Make sure to always do these changes prior to `docker-compose` OR `docker-compose down && docker-compose up` again to ensure that the new configurations take place!**
+
+### Cookie Secret
+
+In `postgres-nginx/kratos/kratos.yml`, look for:
+
+```yaml
+secrets:
+  cookie:
+    - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+```
+
+Replace the string with the result of:
+
+```bash
+openssl rand -base64 32
+```
+
+## Kratos Logging
+
+In `postgres-nginx/kratos/kratos.yml`, look for:
+
+```yaml
+log:
+  level: info
+  format: text
+```
+
+Change to:
+
+```yaml
+log:
+  level: info
+  format: text
+  leak_sensitive_values: false
+```
+
+### Postgres Secret
+
+You should change the `secret` in the `docker-compose.yml` in the DSNs and `POSTGRES_PASSWORD=secret` to a stronger DB password.
+
+If you have special characters in your database password, then make sure to URL encode it! It will not work if you have escape characters in your password, such as `<` and `/`.
+
+### Kratos Redirect URLs
+
+In `postgres-nginx/kratos/kratos.yml`'s:
+
+```yaml
+serve:
+  public:
+    base_url: http://localhost:4000/
+    cors:
+      enabled: true
+  admin:
+    base_url: http://kratos:4434/
+```
+
+and all of the configurations under `selfservice:`, make sure to change all of the `http://localhost:4000/` to the domain you plan on using as the base url to redirect to and use the UI for.
+
+You can also change up the `cors` setings if you need to.
+
+Don't forget to use `https` instead of `http` if you are deploying with NGINX + TLS.
+
+### Email Server Setup
+
+### NGINX HTTPS + Domain Deployment
 
 ## Customization
