@@ -18,6 +18,7 @@ func CreateAuthMiddleware(oryClient *ory.APIClient) func(next echo.HandlerFunc) 
 		return func(c echo.Context) error {
 			whitelist := []string{
 				"/api",
+				"/api/notprotected", // dev route for not protected route
 				"/api/auth/signup",
 				"/api/auth/logout",
 			}

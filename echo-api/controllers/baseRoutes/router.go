@@ -35,8 +35,15 @@ func GetProtected() echo.HandlerFunc {
 	}
 }
 
+func GetNotProtected() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "not protected")
+	}
+}
+
 // Test routes to see session data.
 func RegisterRoutes(g *echo.Group) {
 	g.GET("/session", GetSession())
 	g.GET("/protected", GetProtected())
+	g.GET("/notprotected", GetNotProtected())
 }
