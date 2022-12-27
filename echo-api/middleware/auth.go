@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/jchen42703/echo-api/auth"
@@ -31,9 +32,10 @@ func CreateAuthMiddleware(oryClient *ory.APIClient) func(next echo.HandlerFunc) 
 			}
 
 			// check if we have a session
-			session, _, err := auth.ValidateSession(oryClient, c)
+			session, resp, err := auth.ValidateSession(oryClient, c)
 			if err != nil {
-				// fmt.Println("validate sess err: ", templates.NewError(err))
+				fmt.Println("validate sess err: ", templates.NewError(err))
+				fmt.Println("resp: ", resp)
 				// return c.JSON(http.StatusUnauthorized, templates.NewError(err))
 				return echo.NewHTTPError(http.StatusUnauthorized, "invalid session")
 			}
