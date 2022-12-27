@@ -1,0 +1,78 @@
+version: v0.8.0-alpha.3
+
+dsn: postgres://kratos:secret@127.0.0.1:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+
+serve:
+  public:
+    base_url: http://kratos:4433/
+    cors:
+      enabled: true
+  admin:
+    base_url: http://kratos:4434/
+
+selfservice:
+  default_browser_return_url: http://localhost:4000/
+  allowed_return_urls:
+    - http://localhost:4000
+
+  methods:
+    password:
+      enabled: true
+
+  flows:
+    error:
+      ui_url: http://localhost:4000/error
+
+    settings:
+      ui_url: http://localhost:4000/settings
+      privileged_session_max_age: 15m
+
+    recovery:
+      enabled: true
+      ui_url: http://localhost:4000/recovery
+      after:
+        hooks:
+          - hook: revoke_active_sessions
+
+    verification:
+      enabled: true
+      ui_url: http://localhost:4000/verification
+      after:
+        default_browser_return_url: http://localhost:4000
+
+    logout:
+      after:
+        default_browser_return_url: http://localhost:4000/login
+
+    login:
+      ui_url: http://localhost:4000/login
+
+    registration:
+      ui_url: http://localhost:4000/registration
+      after:
+        password:
+          hooks:
+            - hook: session
+
+log:
+  level: info
+  format: text
+
+secrets:
+  cookie:
+    - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+
+hashers:
+  algorithm: bcrypt
+  bcrypt:
+    cost: 8
+
+identity:
+  default_schema_id: preset://email
+  schemas:
+    - id: preset://email
+      url: file:///etc/config/kratos/identity.schema.json
+
+courier:
+  smtp:
+    connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true

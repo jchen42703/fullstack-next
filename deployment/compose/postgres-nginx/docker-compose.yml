@@ -10,7 +10,7 @@ services:
         target: /var/lib/postgresql/data
         read_only: false
       - type: bind
-        source: ./contrib/quickstart/kratos/with-postgres
+        source: ./kratos
         target: /etc/config/kratos
     command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
     restart: on-failure
@@ -34,7 +34,7 @@ services:
         target: /var/lib/postgresql/data
         read_only: false
       - type: bind
-        source: ./contrib/quickstart/kratos/with-postgres
+        source: ./kratos
         target: /etc/config/kratos
     networks:
       - intranet
@@ -59,7 +59,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   ui:
-    build: ../../ui
+    build: ../../../ui
     environment:
       - ORY_SDK_URL=http://kratos:4433/
       - PORT=4455
@@ -73,7 +73,7 @@ services:
       - intranet
 
   backend:
-    build: ../../echo-api
+    build: ../../../echo-api
     environment:
       - ORY_KRATOS_BASE_URL=http://kratos:4433
       - SERVER_URL=0.0.0.0:3000
