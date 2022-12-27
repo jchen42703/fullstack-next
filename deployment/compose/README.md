@@ -66,3 +66,14 @@ docker-compose -f quickstart.yml -f quickstart-standalone.yml -f quickstart-post
 docker-compose -f quickstart.yml -f contrib/quickstart/kratos/cloud/quickstart.yml down
 docker-compose -f quickstart.yml rm -fsv
 ```
+
+## Notes
+
+There are some nuanced aspects of deploying with Docker.
+
+1. Serve servers under `0.0.0.0`.
+   1. This is so that everything under the subnet can access the server. This is important for Docker deployments because we will not know what the exact IP will be.
+2. Use container names to replace hosts!
+   1. For example, in `proxy/nginx.conf`, I used `client` and `backend` to abstract their host IP addresses. This is because in a Docker subnet, the actual IPs of each container will vary and will rarely be `localhost`.
+   2. You can also see this when I specify the Kratos Public API Url with `http://kratos:4433`, where `kratos` represents the host IP of the Kratos API container.
+3. `docker-compose up` doesn't seem to rebuild with the updated `nginx` config? Not too sure about this one.
