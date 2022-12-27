@@ -4,6 +4,31 @@ Deploying the kratos infrastructure.
 
 ## Docker Compose
 
+**Quick start with Postgres + Nginx + UI + Backend:**
+
+```bash
+# Make sure that postgres is not already running locally.
+# Linux:
+# sudo systemctl stop postgresql
+# Make sure to URL encode your password:
+# https://github.com/ory/kratos/issues/2294
+docker-compose -f postgres-nginx/docker-compose.yml up --build --force-recreate -d
+```
+
+To shut down the containers, simply do:
+
+```bash
+docker-compose -f postgres-nginx/docker-compose.yml down
+```
+
+**Optional:** Clean up volumes with:
+
+```bash
+docker-compose -f postgres-nginx/docker-compose.yml rm -fsv
+```
+
+## Older Commands
+
 Starter with postgres:
 
 ```bash
