@@ -19,8 +19,7 @@ func main() {
 	v1 := r.Group("/api")
 	baseRoutes.RegisterRoutes(v1)
 
-	port := os.Getenv("PORT")
-	serverUrl := fmt.Sprintf("localhost:%s", port)
+	serverUrl := os.Getenv("SERVER_URL")
 	fmt.Println("server url: ", serverUrl)
 	r.Logger.Fatal(r.Start(serverUrl))
 }
